@@ -8,6 +8,12 @@ img{
     width: 100%;
     display: block;
 }
+a:link,
+a:visited,
+a:hover,
+a:active{
+    text-decoration: none;
+}
 a{
     display: block;
     text-decoration: none;
@@ -19,10 +25,104 @@ ul,ol{
 html,body{
     height: 100%;
 }
+body{
+    padding-left: 180px;
+    transition: all 1s;
+}
+body.active{
+    padding-left: 0px;
+    transition: all 1s;
+}
 /**********************************************/
 .body_bg{
     background-color: #222d32;
 }
 .mt_150{
-    margin-top: 150px;
+    margin-top: 180px;
+}
+/* 侧边栏 ****************************************/
+.lt_aside{
+    width: 180px;
+    height: 100%;
+    background-color: #222d32;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 1s;
+}
+.lt_aside.active{
+    transition: all 1s;
+    left: -180px;
+}
+.lt_aside .brand{
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    background-color: #367fa9;
+    color: #fff;
+    font-size: 24px;
+}
+.lt_aside .user{
+    height: 150px;
+    width: 100%;
+}
+.lt_aside .user img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-top: 30px;
+
+}
+.lt_aside .user p{
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+.lt_aside .nav a{
+    height: 40px;
+    line-height: 40px;
+    color: #ccc;
+    padding-left: 30px;
+    border-left: 3px solid transparent;
+}
+.lt_aside .nav a.active{
+    border-left: 3px solid #069;
+    background-color: #1d1f21;
+}
+.lt_aside .nav .sorts>a{
+    padding-left: 50px;
+}
+
+/* 主题头部******************************** */
+.lt_main{
+    width: 100%;
+    height: 100%;
+    /* background-color: pink; */
+}
+.lt_main .lt_header{
+    padding: 0 20px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #3c8dbc; 
+}
+.lt_main .lt_header a{
+    color: #fff;
+    font-size: 16px;
+}
+/* 主题内容 ********************************/
+.container-fluid{
+    padding: 20px 15px 0 15px;
+}
+.container-fluid .breadcrumbs a{
+    color: #337ab7;
+}
+/*报表*/
+.content_left,
+.content_right {
+  width: 45%;
+  height: 400px;
+  /* background-color: pink; */
 }
