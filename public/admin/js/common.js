@@ -11,8 +11,8 @@ $(document).ajaxStart(function(){
 
 $(document).ajaxStop(function(){
     setTimeout(function(){
-        NProgress.dosne();
-    },2000);
+        NProgress.done();
+    },500);
    
 });
 
@@ -25,6 +25,7 @@ $(".sorts").prev().on("click",function(){
 $('.icon-menu').on('click',function(){
     $('body').toggleClass('active');
     $('.lt_aside').toggleClass('active');
+    $('.lt_header').toggleClass('active');
 })
 
 // 7. 退出组件

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>二级分类</title>
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="./lib/bootstrap-validator/css/bootstrapValidator.css">
     <link rel="stylesheet" href="./lib/nprogress/nprogress.css">
@@ -13,7 +13,7 @@
 <body>
     <div class="lt_aside">
         <div class="brand">黑马23期</div>
-        <div class="user">
+        <div class="user active">
             <img src="./images/1.jpeg" alt="">
             <p>超级管理员</p>
         </div>
@@ -32,7 +32,7 @@
                     </a>
                     <div class="sorts" style="display: block;">
                         <a href="first.html">一级分类</a>
-                        <a href="second.html" class="active">二级分类</a>
+                        <a href="second.html"  class="active">二级分类</a>
                     </div>
 
                 </li>
@@ -61,27 +61,102 @@
                 <li class="active">二级分类</li>
             </ol>
             <!-- 主体内容 -->
-            <div class="lt_content"></div>
+            <div class="lt_content">
+
+                <button class="btn btn-default mb_20 btn_add">添加分类</button>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width = "10%">序号</th>
+                            <th width = "30%">一级分类名称</th>
+                            <th width = "30%">二级分类名称</th>
+                            <th width = "30%">二级分类LOGO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 用户模板 -->
+                    </tbody>
+                </table>
+                <!-- 分页的盒子 -->
+                <div class="text-right">
+                    <!-- 使用插件bootstrap->paginator.js插件 -->
+                    <ul id="paginator"></ul>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- 准备模板 -->
+    <script type="text/html" id="tpl">
+        {{ each rows v i }}
+            <tr>
+                <td>{{ (page-1)*size+i+1 }}</td>
+                <td>{{ v.categoryName }}</td>
+                <td>{{ v.brandName }}</td>
+                <td><img src="{{v.brandLogo?v.brandLogo:'images/none.png'}}" width="50" height="50" style="margin: 0 auto" alt=""></td>
+            </tr>
+        {{ /each }}
+    </script>
+    <!-- 准备模板2 -->
+    <script type="text/html" id="tpl2">
+        {{ each rows v i }}
+            <li><a href="#" data-id = '{{ v.id }}'>{{ v.categoryName }}</a></li>
+        {{ /each }}
+    </script>
+
 
     <!--role  aria   sr-only:  可以删掉-->
-    <!--  bootstrap->javascript组件->模态框 -->
-    <div class="modal fade" tabindex="-1" id="logoutModal">
+    <!--  bootstrap->javascript插件->模态框 -->
+    <div class="modal fade" tabindex="-1" id="addModal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">温馨提示</h4>
+                <h4 class="modal-title">添加分类</h4>
             </div>
-            <div class="modal-body">
-                <span class="glyphicon glyphicon-info-sign text-danger"></span>
-                您确定要退出后台管理系统吗?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary btn_logout">确定</button>
-            </div>
+            <form>
+                <div class="modal-body">
+                    <!-- 选择一级分类名称 -->
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="dropdown_text" >请选择一级分类名称</span>
+                                <span class="caret"></span>
+                                <input type="hidden" name="categoryId">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 输入二级分类名称 -->
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="brandName" placeholder="请输入二级分类的名称">
+                    </div>
+                    <!-- 上传图片logo -->
+                    <!-- 引入基于jquery的fileupload.js插件 -->
+                    <div class="form-group">
+                        <!-- 小套路：看到的label的样式，把input：file给隐藏了 -->
+                        <label for="fileupload" class="btn btn-default">上传图片</label>
+                        <!-- name: 后端通过这个name属性获取到文件 -->
+                        <!-- data-url: 指定图片上传的地址 -->
+                        <input type="file" id="fileupload" data-url="/category/addSecondCategoryPic" name="pic1" class="btn btn-default" style="display: none;">
+                    </div>
+                    <!-- logo -->
+                    <div class="form-group">
+                        <div class="img_box">
+                            <img src="images/none.png" width="100" height="100" alt="">
+                        </div>
+                        <input type="hidden" name="brandLogo">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary btn_confirm">添加</button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
@@ -89,9 +164,15 @@
 
 
     <script src="./lib/jquery/jquery.js"></script>
+    <script src="./lib/jquery-fileupload/jquery.ui.widget.js"></script>
+    <script src="./lib/jquery-fileupload/jquery.fileupload.js"></script>
     <script src="./lib/bootstrap/js/bootstrap.js"></script>
     <script src="./lib/bootstrap-validator/js/bootstrapValidator.js"></script>
+    <script src="./lib/bootstrap-paginator/bootstrap-paginator.js"></script>
+    <script src="./lib/artTemplate/template-web.js"></script>
     <script src="./lib/nprogress/nprogress.js"></script>
+    
     <script src="./js/common.js"></script>
+    <script src="./js/second.js"></script>
 </body>
 </html>
